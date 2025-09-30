@@ -61,17 +61,41 @@
 
 #### 推论
 
-内容：若 $\displaystyle\lim_{n \to +\infty} a_n = a^*$，则对于其任意子序列 $\{a_{n_k}\}$，均有 $\displaystyle\lim_{n \to +\infty} a_{n_k} = a^*$。
+内容：若 $\displaystyle\lim_{n \to +\infty} x_n = x^*$，则对于其任意子序列 $\{x_{n_k}\}$，均有 $\displaystyle\lim_{k \to +\infty} x_{n_k} = x^*$。
 
 证明：考虑 $\displaystyle\lim_{k \to +\infty} n_k = +\infty$，具体过程略。
 
 ### 柯西 Cauchy 收敛原理
 
-内容：$\{x_n\}$ 收敛 $\Leftrightarrow \forall \epsilon > 0, \exists N \in \mathbb{N}, \text{s.t. } \forall n, m > N, |x_n - x_m| < \epsilon \Leftrightarrow \forall \epsilon > 0, \exists N \in \mathbb{N}, \text{s.t. } \forall n > N, p \in \mathbb{N}, |x_{n + p} - x_n| < \epsilon$。
+内容：$\{x_n\}$ 收敛 $\Leftrightarrow \forall \epsilon > 0, \exists N \in \mathbb{N}, \text{s.t. } \forall n, m > N, |x_n - x_m| < \epsilon$，另一表述为 $\forall \epsilon > 0, \exists N \in \mathbb{N}, \text{s.t. } \forall n > N, p \in \mathbb{N}, |x_{n + p} - x_n| < \epsilon$。
 
 证明：
 
 - $\Rightarrow$：$\exists x^* \in \mathbb{R}, \text{s.t. } \displaystyle\lim_{n \to +\infty} x_n = x^*$，且 $\forall \epsilon > 0, \exists N \in \mathbb{N}, \text{s.t. } \forall n, m > N, |x_n - x^*| < \epsilon, |x^* - x_m| < \epsilon$，则 $|x_n - x_m| \leq |x_n - x^*| + |x^* - x_m| < \epsilon$。
+- $\Leftarrow$：考虑先证明其有界。
+
+取 $\epsilon = 1$，则 $\exists N \in \mathbb{N}, \text{s.t. } \forall n > N + 1, |x_n - x_{N + 1}| < 1$，则 $|x_n| < |x_{N + 1}| + 1$。
+
+取 $M = \max\{|x_0|, |x_1|, \cdots, |x_N|, |x_{N + 1}| + 1\}$，则 $\forall n \in \mathbb{N}, |x_i| \leq M$，即 $\{x_n\}$ 有界。
+
+接下来根据 B-W 定理考察其收敛子序列。
+
+$\exists$ 收敛子序列 $\{x_{n_k}\}$，$\text{s.t. } \displaystyle\lim_{k \to +\infty} x_{n_k} = a$。
+$$
+\forall \epsilon > 0, \begin{cases}
+\exists K \in \mathbb{N}, \text{s.t. } \forall k > K, |x_{n_k} - a| < \dfrac{\epsilon}{2} \\
+\exists N_0 \in \mathbb{N}, \text{s.t. } \forall n, m > N_0, |x_n - x_m| < \dfrac{\epsilon}{2}
+\end{cases}
+$$
+由 $\displaystyle\lim_{k \to +\infty} n_k = +\infty$ 可知：
+$$
+\exists K_0 > K, \text{s.t. } n_{K_0} > N_0
+$$
+取 $N = n_{K_0}$，则：
+$$
+\forall n > N, |x_n - a| < |x_n - x_N| + |x_N - a| < \dfrac{\epsilon}{2} + \dfrac{\epsilon}{2} = \epsilon
+$$
+故 $\displaystyle\lim_{n \to +\infty} x_n = a$，即 $\{x_n\}$ 收敛。
 
 [例 4] 求证：$x_n = \displaystyle\sum_{i = 1}^n \frac{1}{i}$ **不**收敛。
 
@@ -82,3 +106,11 @@ $|x_{n + p} - x_n| = \displaystyle\sum_{i = 1}^p \frac{1}{n + i} \geq \frac{p}{n
 [例 5] 求证：$x_n = \displaystyle\sum_{i = 1}^n \frac{1}{i^2}$ 收敛。
 
 $|x_{n + p} - x_n| = \displaystyle\sum_{i = 1}^p \frac{1}{(n + i)^2} \leq \sum_{i = 1}^p \frac{1}{(n + i - 1)(n + i)} = \sum_{i = 1}^p (\frac{1}{n + i - 1} - \frac{1}{n + i}) = \frac{1}{n} - \frac{1}{n + p} \leq \frac{1}{n}$，则 $\forall \epsilon > 0$，取 $N = \lceil \dfrac{1}{\epsilon} \rceil$ 即可。
+
+------
+
+我们称实数是**完备**的，因为在实数中定义的柯西序列收敛，但在其他数域中未必。
+
+- e.g. 在 $\mathbb{Q}$ 中定义 $x_n = \dfrac{\lfloor 10^{n - 1} \pi \rfloor}{10^{n - 1}}$，则 $\{x_n\}$ 在 $\mathbb{Q}$ 中不收敛。
+
+实数完备的原因在于其上有 **B-W 定理**，进一步来自**闭区间套定理**，再进一步来自**确界定理**，最终来自**确界原理**。
