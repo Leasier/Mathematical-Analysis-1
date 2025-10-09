@@ -42,11 +42,51 @@ B-W 定理的推论（**无穷大序列的子序列也是无穷大序列**）：
 - 条件：(1) $\{x_n\}$ 每项大于零且严格单调递增；(2) $\{x_n\}$ 发散于正无穷；(3) $\exists a \in \mathbb{R}, \displaystyle\lim_{n \to +\infty} \frac{y_{n + 1} - y_n}{x_{n + 1} - x_n} = a$。
 - 结论：$\displaystyle\lim_{n \to +\infty} \frac{y_n}{x_n} = a$。
 
-[例] 已知 $\displaystyle\lim_{n \to +\infty} x_n = a \in \mathbb{R}$，求证：$\displaystyle\lim_{n \to +\infty} \frac{\sum_{i = 1}^n i x_i}{n^2} = \frac{a}{2}$。
+如果差分一次后仍不能确定其收敛性，可以试着继续差分。
+
+[例] 已知 $\displaystyle\lim_{n \to +\infty} x_n = a \in \mathbb{R}$，求证：$\displaystyle\lim_{n \to +\infty} \frac{\displaystyle\sum_{i = 1}^n i x_i}{n^2} = \frac{a}{2}$。
 
 - 由 Stolz 定理，只需考察 $\dfrac{(n + 1) x_{n + 1}}{(n + 1)^2 - n^2} = \dfrac{n + 1}{2n + 1} x_{n + 1}$。
 - $\displaystyle\lim_{n  \to +\infty} \frac{n + 1}{2n + 1} x_{n + 1} = (\lim_{n \to +\infty} \frac{n + 1}{2n + 1})(\lim_{n \to +\infty} x_{n + 1}) = \frac{a}{2}$，进而可推知结论。
 
 ------
 
-如果差分一次后仍不能确定其收敛性，可以试着继续差分。
+#### Toeplitz 变换
+
+构造一个“三角形数表”，$\forall i \in \mathbb{N}_+$，第 $i$ 行有 $i$ 个数 $t_{i, 1}, t_{i, 2}, \cdots, t_{i, i}$，满足：
+
+- $t_{i, j} \geq 0$。
+- $\displaystyle\sum_{j = 1}^i t_{i, j} = 1$。
+
+- $\forall j \in \mathbb{N}_+, \displaystyle\lim_{i \to +\infty} t_{i, j} = 0$。
+
+此时，我们将 $\{a_n\}$ 变换为 $\{b_n\}$，满足 $b_n = \displaystyle\sum_{i = 1}^n t_{n, i} a_i$。这一过程称作 Toeplitz 变换。
+
+一个先前讨论过的特例是 $t_{i, j} = \dfrac{1}{i}$，即 $\{b_n\}$ 每项为 $\{a_n\}$ 的前缀均值。
+
+#### 引理 1
+
+内容：若 $\displaystyle\lim_{n \to +\infty} a_n = 0$，则 $\displaystyle\lim_{n \to +\infty} b_n = 0$。
+
+证明（**拆分，一部分利用极限定义，另一部分有限，可以继续操作**）：
+
+- $\forall \epsilon > 0, \exists N \in \mathbb{N}_+, \text{s.t. } \forall n > N, |a_n| < \dfrac{\epsilon}{2} \Rightarrow \displaystyle\sum_{i = N + 1}^n t_{n, i} |a_i| < \sum_{i = N + 1}^n t_{n, i} \cdot \frac{\epsilon}{2} \leq \frac{\epsilon}{2}$。
+- 接下来讨论 $c_n = \displaystyle\sum_{i = 1}^N t_{n, i} a_i$。$\forall i \in \mathbb{N} \cap i \leq N$，由于 $\{t_{n, i}\}_{n \in \mathbb{N}_+}$ 是无穷小序列，有 $\{t_{n, i} a_i\}_{n \in \mathbb{N}_{\geq N}}$ 也为无穷小序列，接着将这 $N$ 个无穷小序列加起来，得到的 $\{c_n\}_{n \in \mathbb{N}_{\geq N}}$ 还是无穷小序列。
+- 故 $\exists N' \in \mathbb{N}_{\geq N}, \text{s.t. } \forall n > N', |c_n| < \dfrac{\epsilon}{2}$。
+- 进而 $\forall n > N', |b_n| \leq |c_n| + \displaystyle\sum_{i = N + 1}^n t_{n, i} |a_i| < \epsilon$，则 $\displaystyle\lim_{n \to +\infty} b_n = 0$。
+
+#### 引理 2
+
+内容：若 $\displaystyle\lim_{n \to +\infty} a_n = a$，则 $\displaystyle\lim_{n \to +\infty} b_n = a$。
+
+利用引理 1 易证，略去。
+
+#### 定理的证明
+
+方便起见，不妨令 $x_0 = y_0 = 0$。
+
+令 $a_n = \dfrac{y_n - y_{n - 1}}{x_n - x_{n - 1}}, b_n = \dfrac{y_n}{x_n}, \forall i \in \mathbb{N} \cap i \leq n, t_{n, i} = \dfrac{x_i - x_{i - 1}}{x_n}$。
+
+此时有 $\displaystyle\sum_{i = 1}^n t_{n, i} a_i = \sum_{i = 1}^n \frac{y_i - y_{i - 1}}{x_n} = \frac{y_n}{x_n} = b_n$。
+
+由引理 2 可知 $\displaystyle\lim_{n \to +\infty} b_n = a$。
