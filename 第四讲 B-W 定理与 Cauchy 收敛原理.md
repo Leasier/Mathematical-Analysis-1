@@ -114,3 +114,18 @@ $|x_{n + p} - x_n| = \displaystyle\sum_{i = 1}^p \frac{1}{(n + i)^2} \leq \sum_{
 - e.g. 在 $\mathbb{Q}$ 中定义 $x_n = \dfrac{\lfloor 10^{n - 1} \pi \rfloor}{10^{n - 1}}$，则 $\{x_n\}$ 在 $\mathbb{Q}$ 中不收敛。
 
 实数完备的原因在于其上有 **B-W 定理**，进一步来自**闭区间套定理**，再进一步来自**确界定理**，最终来自**确界原理**。
+
+------
+
+[例 6] 求证：$\{\tan(n)\}$ 不收敛。
+
+法一：注意到 $\forall k \in \mathbb{N}$，在 $(k \pi + \dfrac{\pi}{6}, k \pi + \dfrac{\pi}{2}), (k \pi + \dfrac{\pi}{2}, k \pi + \dfrac{5 \pi}{6})$ 中总是各能抓出 $n_1, n_2 \in \mathbb{N}$（因为区间长度 $\dfrac{\pi}{3} > 1$），且 $\tan(n_1) > \dfrac{\sqrt{3}}{3}, \tan(n_2) < -\dfrac{\sqrt{3}}{3}$，则 $\{\tan(n)\}$ 不收敛。
+
+法二：（**一阶递推对应的函数必须有不动点**）$\displaystyle\lim_{n \to +\infty} \tan(n) = \lim_{n \to +\infty} \tan(n + 1)$，假设极限存在，令之为 $A$，则 $A = \dfrac{A + \tan(1)}{1 - A \tan(1)} \Rightarrow A^2 = -1$，显然在 $\mathbb{R}$ 上无解，则 $\{\tan(n)\}$ 不收敛。
+
+法三：（**证明其不是柯西序列**）
+
+- 欲证 $\exists \epsilon > 0, \text{s.t. } \forall N \in \mathbb{N}, \exists n > N, p > 0, \text{s.t. } |\tan(n + p) - \tan(n)| \geq \epsilon$。
+- 化简一下，要求 $\dfrac{\tan(p) (\tan^2(n) + 1)}{1 - \tan(n) \tan(p)} \geq \epsilon$。
+- 稍微放缩一下，令 $p = 13$，只要 $\tan(n) \in (0, \dfrac{1}{\tan(13)})$ 即可令 $\epsilon = \tan(13)$。
+- 这要求 $\exists k \in \mathbb{N}, \text{s.t. } n \in (k \pi, k \pi + (\dfrac{9}{2} \pi - 13))$。由于 $\dfrac{9}{2} \pi - 13 > 1$，任取一个 $k$，其中一定包含一个 $n$，则 $\{\tan(n)\}$ 不收敛。
