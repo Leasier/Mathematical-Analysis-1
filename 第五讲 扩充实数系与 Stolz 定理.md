@@ -37,7 +37,7 @@ B-W 定理的推论（**无穷大序列的子序列也是无穷大序列**）：
 
 ### Stolz 定理
 
-内容：
+#### Stolz 定理的内容
 
 - 条件：(1) $\{x_n\}$ 每项大于零且严格单调递增；(2) $\{x_n\}$ 发散于正无穷；(3) $\exists a \in \mathbb{R}, \displaystyle\lim_{n \to +\infty} \frac{y_{n + 1} - y_n}{x_{n + 1} - x_n} = a$。
 - 结论：$\displaystyle\lim_{n \to +\infty} \frac{y_n}{x_n} = a$。
@@ -57,7 +57,6 @@ B-W 定理的推论（**无穷大序列的子序列也是无穷大序列**）：
 
 - $t_{i, j} \geq 0$。
 - $\displaystyle\sum_{j = 1}^i t_{i, j} = 1$。
-
 - $\forall j \in \mathbb{N}_+, \displaystyle\lim_{i \to +\infty} t_{i, j} = 0$。
 
 此时，我们将 $\{a_n\}$ 变换为 $\{b_n\}$，满足 $b_n = \displaystyle\sum_{i = 1}^n t_{n, i} a_i$。这一过程称作 Toeplitz 变换。
@@ -81,7 +80,7 @@ B-W 定理的推论（**无穷大序列的子序列也是无穷大序列**）：
 
 利用引理 1 易证，略去。
 
-#### 定理的证明
+#### Stolz 定理的证明
 
 方便起见，不妨令 $x_0 = y_0 = 0$。
 

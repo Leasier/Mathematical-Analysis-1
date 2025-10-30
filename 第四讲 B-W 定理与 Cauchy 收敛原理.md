@@ -17,7 +17,6 @@
 下设 $\displaystyle\lim_{n \to +\infty} a_n = a^*, \displaystyle\lim_{n \to +\infty} b_n = b^*$。
 
 - 若 $a^* < b^*$，则 $\cap_{n = 0}^{+\infty} [a_n, b_n] = [a^*, b^*]$。
-
 - 若 $a^* = b^*$，则 $\cap_{n = 0}^{+\infty} [a_n, b_n] = \{a^*\}$。
 
 证明（只考虑前者）：分别考虑 $\cap_{n = 0}^{+\infty} [a_n, b_n] \subseteq [a^*, b^*], [a^*, b^*] \subseteq \cap_{n = 0}^{+\infty} [a_n, b_n]$ 即可。
@@ -38,7 +37,7 @@
 
 2. 求 $x^*$
 
-考虑**递推**式：$\displaystyle\lim_{n \to +\infty} x_{n + 1} = x^*$，$\displaystyle\lim_{n \to +\infty} \dfrac{a}{n + 1} = 0$，则 $x^* = 0 \times x^*$，则 $x^* = 0$，即 $\displaystyle\lim_{n \to +\infty} \frac{a^n}{n!} = 0$。
+考虑**递推**式：$\displaystyle\lim_{n \to +\infty} x_{n + 1} = x^*$，$\displaystyle\lim_{n \to +\infty} \dfrac{a}{n + 1} = 0$，则 $x^* = 0 \cdot x^*$，则 $x^* = 0$，即 $\displaystyle\lim_{n \to +\infty} \frac{a^n}{n!} = 0$。 
 
 ### B-W 定理
 
@@ -49,13 +48,11 @@
 证明（**构造法**）：
 
 - 设 $a_0, b_0$ 为 $\{x_n\}$ 的上下界。
-
 - 取中点 $c_0 = \dfrac{a_0 + b_0}{2}$，则 $[a_0, c_0], [c_0, b_0]$ 中至少一个区间内包含了 $\{x_n\}$ 的**无限项**。
 - 不妨取 $[a_0, c_0]$ 满足条件，令 $a_1 = a_0, b_1 = c_0$，取 $n_0$ 满足 $x_{n_0} \in [a_1, b_1]$。
 - 再取中点 $c_1 = \dfrac{a_1 + b_1}{2}$，则 $[a_1, c_1], [c_1, b_1]$ 中至少一个区间内包含了 $\{x_n\}_{n > n_0}$ 的**无限项**。
 - 不妨取 $[a_1, c_1]$ 满足条件，令 $a_2 = a_1, b_2 = c_1$，取 $n_1$ 满足 $n_1 > n_0, x_{n_1} \in [a_2, b_2]$。
 - 如此续行，可以构造出**闭区间套** $\{[a_n, b_n]\}$，使得 $\{n_k\}$ 严格单调递增，且 $\forall k \in \mathbb{N}, x_{n_k} \in [a_{k + 1}, b_{k + 1}]$。
-
 - 由 $b_{n + 1} - a_{n + 1} = \dfrac{b_n - a_n}{2}$ 可知 $\displaystyle\lim_{n \to +\infty} (b_n - a_n) = 0$ 即 $a^* = b^*$（定义同前）。
 - 由夹挤原理可知 $\displaystyle\lim_{n \to +\infty} x_{n_k} = a^*$。
 
@@ -111,7 +108,7 @@ $|x_{n + p} - x_n| = \displaystyle\sum_{i = 1}^p \frac{1}{(n + i)^2} \leq \sum_{
 
 我们称实数是**完备**的，因为在实数中定义的柯西序列收敛，但在其他数域中未必。
 
-- e.g. 在 $\mathbb{Q}$ 中定义 $x_n = \dfrac{\lfloor 10^{n - 1} \pi \rfloor}{10^{n - 1}}$，则 $\{x_n\}$ 在 $\mathbb{Q}$ 中不收敛。
+- e.g. 在 $\mathbb{Q}$ 中定义 $x_n = \dfrac{\lfloor 10^n \pi \rfloor}{10^n}$，则 $\{x_n\}$ 在 $\mathbb{Q}$ 中不收敛。
 
 实数完备的原因在于其上有 **B-W 定理**，进一步来自**闭区间套定理**，再进一步来自**确界定理**，最终来自**确界原理**。
 
