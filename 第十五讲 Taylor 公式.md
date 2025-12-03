@@ -260,6 +260,131 @@ $$
 
 - 有趣的是，上面两个结果并不相同：尽管 $2n + 2$ 阶 Taylor 展开式中的 $x^{2n + 1}$ 项均为 $0$，但 (1)(2) 的 Lagrange 余项却因为精度要求之别产生了不同。
 
+[例 7] 已知 $f$ 在 $[a, b]$ 上二阶可导，且 $f'(a) = f'(b) = 0$，求证：$\exists c \in (a, b), \text{s.t. } |f''(c)| \geq \dfrac{4}{(b - a)^2} |f(b) - f(a)|$。
+
+- _Motivation：我要怎么利用端点一阶导为 $0$ 呢？_
+- _Motivation：注意到答案形式中没有一阶导，那是否可以考虑在端点处展开？_
+
+$$
+\forall x \in (a, b),
+\begin{cases}
+\exists \xi_1 \in (a, x), \text{s.t. } f(x) = f(a) + f'(a) (x - a) + \dfrac{f''(\xi_1)}{2} (x - a)^2 = f(a) + \dfrac{f''(\xi_1)}{2} (x - a)^2 \\
+\exists \xi_2 \in (x, b), \text{s.t. } f(x) = f(b) + f'(b) (x - b) + \dfrac{f''(\xi_2)}{2} (x - b)^2 = f(b) + \dfrac{f''(\xi_2)}{2} (x - b)^2
+\end{cases}
+$$
+
+- _Motivation：注意到答案形式中没有内点函数值，那是否可以考虑将两式相减？_
+- 将第二式减去第一式，得 $0 = (f(b) - f(a)) + \dfrac{1}{2} (f''(\xi_2) (x - b)^2 - f''(\xi_1) (x - a)^2)$。
+- 考虑反证法：假设 $\forall c \in (a, b), |f''(c)| < \dfrac{4}{(b - a)^2} |f(b) - f(a)|$。
+- 移项可知 $f(b) - f(a) = f''(\xi_1) (x - a)^2 - f''(\xi_2) (x - b)^2$，两边同时取绝对值可知：
+
+$$
+\begin{aligned}
+|f(b) - f(a)| &= \frac{1}{2} (|f''(\xi_1)| (x - a)^2 + |f''(\xi_2)| (x - b)^2) \\
+&< \frac{2}{(b - a)^2} |f(b) - f(a)| ((x - a)^2 + (x - b)^2)
+\end{aligned}
+$$
+
+- 注意到 $x$ 的值由我们**自行选定**，为使限制最强（即 $(x - a)^2 + (x - b)^2$ 最小），取 $x = \dfrac{a + b}{2}$ 可得：
+
+$$
+\begin{aligned}
+|f(b) - f(a)| &< \frac2{(b - a)^2} |f(b) - f(a)| \cdot \frac{1}{2} (b - a)^2 \\
+&= |f(b) - f(a)|
+\end{aligned}
+$$
+
+- 由此推出矛盾，故假设不成立，即 $\exists c \in (a, b), \text{s.t. } |f''(c)| \geq \dfrac{4}{(b - a)^2} |f(b) - f(a)|$。
+
+[例 8] 已知 $f$ 在 $[a, b]$ 上二阶可导，$f(a) = f(b) = 0$，且 $f''$ 在 $[a, b]$ 上能取到最大值，求证：
+
+- (1) $\displaystyle\max_{a \leq x \leq b} |f(x)| \leq \frac{1}{8} (b - a)^2 \max_{a \leq x \leq b} |f''(x)|$。
+- (2) $\displaystyle\max_{a \leq x \leq b} |f'(x)| \leq \frac{1}{2} (b - a) \max_{a \leq x \leq b} |f''(x)|$。
+
+第一问：
+
+- _Motivation：这里不涉及 $f'$，考虑在内点展开以将其消去。_
+- 取 $x \in (a, b)$，有：
+
+$$
+\begin{cases}
+\exists \xi_1 \in (a, x), \text{s.t. } 0 = f(a) = f(x) + f'(x) (a - x) + \dfrac{f''(\xi_1)}{2} (a - x)^2 &\quad (1) \\
+\exists \xi_2 \in (x, b), \text{s.t. } 0 = f(b) = f(x) + f'(x) (b - x) + \dfrac{f''(\xi_2)}{2} (b - x)^2 &\quad (2)
+\end{cases}
+$$
+
+- 为消去 $f'(x)$，考虑写出 $\dfrac{1}{x - a} \cdot (1) + \dfrac{1}{b - x} \cdot (2)$：
+
+$$
+\begin{aligned}
+& 0 = \frac{b - a}{(x - a)(b - x)} f(x) + (\dfrac{f''(\xi_1)}{2} (x - a) + \dfrac{f''(\xi_2)}{2} (b - x)) \\
+\Leftrightarrow & f(x) = -\frac{(x - a)(b - x)}{b - a} (\dfrac{f''(\xi_1)}{2} (x - a) + \dfrac{f''(\xi_2)}{2} (b - x))
+\end{aligned}
+$$
+
+- 两边同时取绝对值可知：
+
+$$
+\begin{aligned}
+|f(x)| &= \frac{(x - a)(b - x)}{b - a} |\dfrac{f''(\xi_1)}{2} (x - a) + \dfrac{f''(\xi_2)}{2} (b - x)| \\
+&\leq \frac{(x - a)(b - x)}{2(b - a)} (|f''(\xi_1)| (x - a) + |f''(\xi_2)| (b - x)) \\
+&\leq \frac{(x - a)(b - x)}{2(b - a)} \cdot (b - a) \max_{a \leq x \leq b} |f''(x)| \\
+&= \frac{(x - a)(b - x)}{2} \max_{a \leq x \leq b} |f''(x)| \\
+&\leq \frac{1}{8} (b - a)^2 \max_{a \leq x \leq b} |f''(x)|
+\end{aligned}
+$$
+
+- 由 $x$ 的任意性，再特判 $x = a$ 和 $x = b$ 的情况（或利用 $f$ 的连续性），可知 $\displaystyle\max_{a \leq x \leq b} |f(x)| \leq \frac{1}{8} (b - a)^2 \max_{a \leq x \leq b} |f''(x)|$。
+
+第二问：
+
+- _Motivation：这里不涉及 $f$，仍考虑在内点展开以将其消去。_
+- 为消去 $f$，考虑写出 $(2) - (1)$：
+
+$$
+\begin{aligned}
+0 &= f'(x) (b - a) + (\frac{f''(\xi_2)}{2} (b - x)^2 - \frac{f''(\xi_1)}{2} (a - x)^2) \\
+\Leftrightarrow f'(x) &= \frac{1}{2 (b - a)} (f''(\xi_1) (a - x)^2 - f''(\xi_2) (b - x)^2)
+\end{aligned}
+$$
+
+- 两边同时取绝对值可知：
+
+$$
+\begin{aligned}
+|f'(x)| &= \frac{1}{2 (b - a)} |f''(\xi_1) (a - x)^2 - f''(\xi_2) (b - x)^2| \\
+&\leq \frac{1}{2 (b - a)} (|f''(\xi_1)| (a - x)^2 + |f''(\xi_2)| (b - x)^2) \\
+&\leq \frac{1}{2 (b - a)} \cdot ((a - x)^2 + (b - x)^2) \max_{a \leq x \leq b} |f''(x)| \\
+&< \frac{1}{2 (b - a)} \cdot (b - a)^2 \max_{a \leq x \leq b} |f''(x)| \\
+&= \frac{b - a}{2} \max_{a \leq x \leq b} |f''(x)|
+\end{aligned}
+$$
+
+- 由 $x$ 的任意性，再特判 $x = a$ 和 $x = b$ 的情况（或利用 $f$ 的连续性），可知 $\displaystyle\max{a \leq x \leq b} |f'(x)| \leq \frac{b - a}{2} \max_{a \leq x \leq b} |f''(x)|$。
+
+[例 9] 已知 $f$ 在 $\mathbb{R}$ 上二阶可导，且 $\forall x \in \mathbb{R}, |f(x)| \leq M_0, |f''(x)| \leq M_2$，求证：$\forall x \in \mathbb{R}, |f'(x)| \leq \sqrt{2 M_0 M_2}$。
+
+- _Motivation：结论似乎意味着我们需要通过某种方式卡出 $|f'(x)|$ 的上界，但这个是不是有点均值不等式啊？_
+- $\forall x \in \mathbb{R}$，有：
+
+$$
+\forall h > 0, \exists \xi \in (x, x + h), \text{s.t. } f(x + h) = f(x) + f'(x) h + \frac{f''(\xi)}{2} h^2 \ (1)
+$$
+
+- 整理并取绝对值，化简后可知 $|f'(x)| \leq \dfrac{|f(x + h) - f(x)|}{h} + \dfrac{|f''(\xi)|}{2} h \leq \dfrac{2 M_0}{h} + \dfrac{M_2}{2} h$。
+- 可惜的是，直接通过均值不等式只能卡出 $|f'(x)| \leq 2 \sqrt{M_0 M_2}$，但问题是什么？
+- _Motivation：诶，这个 $f$ 的部分咋有两个啊？_
+- _Motivation：能不能消去与 $f'(x)$ 无关的常数 $f(x)$？_
+- 考虑写出 $x - h$ 处的展开式：
+
+$$
+\exists \xi' \in (x - h, x), \text{s.t. } f(x - h) = f(x) - f'(x) h + \frac{f''(\xi')}{2} h^2 \ (2)
+$$
+
+- 写出 $(1) - (2)$：$f(x + h) - f(x - h) = 2 f'(x) h + \dfrac{1}{2} (f''(\xi) - f''(\xi')) h^2$。
+- 整理并取绝对值，化简后可知 $|f'(x)| \leq \dfrac{|f(x + h) - f(x - h)|}{2h} + \dfrac{|f''(\xi) - f''(\xi')|}{4} h \leq \dfrac{M_0}{h} + \dfrac{M_2}{2} h$。
+- 接下来，取均值不等式即可卡出 $|f'(x)| \leq \sqrt{2 M_0 M_2}$。
+
 ### Taylor 级数
 
 若 $f$ 在 $I$ 上任意阶可导，取 $x_0 \in I$，则有：
@@ -281,21 +406,42 @@ $$
 - **注意：只要 $f$ 在 $I$ 上任意阶可导，就可以给出其在 $a$ 处定义的 $I$ 上的 Taylor 级数，但此时不一定能说可以展开为 Taylor 级数，因为函数值和级数结果不一定能取等！**
 - $x_0 = 0$ 时的 Taylor 级数也称 Maclaurin 级数。
 
-[例 7] 求 $f(x) = e^x$ 的 Maclaurin 级数。
+[例 10] 求 $f(x) = e^x$ 的 Maclaurin 级数。
 
 写出 $f$ 的带 Lagrange 余项的 Maclaurin 展开式：
 
 $$
-\exists \theta \in (0, 1), \text{s.t. } f(x) = \sum_{i = 0}^n \frac{x^i}{i!} + \frac{(\theta x)^{n + 1}}{(n + 1)!}
+\exists \theta \in (0, 1), \text{s.t. } f(x) = \sum_{i = 0}^n \frac{x^i}{i!} + \frac{e^{\theta x}}{(n + 1)!} x^{n + 1}
 $$
 
-考察余项 $R_n(x) = \dfrac{(\theta x)^{n + 1}}{(n + 1)!}$，由于 $|R_n(x)| < \dfrac{|x|^{n + 1}}{(n + 1)!}$，而当 $n + 1 \geq C = \lceil 2|x| \rceil$ 时有 $\dfrac{|x|^{n + 1}}{(n + 1)!} \leq \dfrac{1}{2^{n + 1}} \cdot \dfrac{C^C}{C!}$，而 $\{\dfrac{1}{2^{n + 1}} \cdot \dfrac{C^C}{C!}\}$ 显然是无穷小序列，故 $\displaystyle\lim_{n \to +\infty} R_n(x) = 0$。
+考察余项 $R_n(x) = \dfrac{e^{\theta x}}{(n + 1)!} x^{n + 1}$，由于 $|R_n(x)| < \dfrac{e^x |x|^{n + 1}}{(n + 1)!}$，而当 $n + 1 \geq C = \lceil 2|x| \rceil$ 时有 $\dfrac{|x|^{n + 1}}{(n + 1)!} \leq \dfrac{1}{2^{n + 1}} \cdot \dfrac{e^x C^C}{C!}$，而 $\{\dfrac{1}{2^{n + 1}} \cdot \dfrac{e^x C^C}{C!}\}$ 显然是无穷小序列，故 $\displaystyle\lim_{n \to +\infty} R_n(x) = 0$。
 
 因此 $f$ 的 Maclaurin 级数为：
 
 $$
 e^x = \sum_{i = 0}^{+\infty} \frac{x^i}{i!}
 $$
+
+[例 11] 求证：$e$ 为无理数。
+
+考虑反证法，假设 $e$ 可以被表示为既约分数 $\dfrac{M}{N}$。
+
+由 $e^x$ 的带 Lagrange 余项的 Maclaurin 展开式可知：
+
+$$
+\forall n \in \mathbb{N}_+, \exists \theta \in (0, 1), \text{s.t. } e = \sum_{i = 0}^n \frac{1}{i!} + \frac{e^{\theta}}{(n + 1)!}
+$$
+
+由放缩可知 $e^{\theta} \in (1, 3)$。
+
+- _Motivation：能不能通过某些方式，让余项导出矛盾？_
+
+考虑在展开式两边同时乘上 $n!$，有 $\dfrac{e^{\theta}}{n + 1} = M (N - 1)! - \displaystyle\sum_{i = 0}^n \frac{n!}{i!} \in \mathbb{Z}$。
+
+令 $n = \max(N, 2)$，可知 $\dfrac{e^{\theta}}{n + 1} \in (0, \dfrac{3}{n + 1}) \subseteq (0, 1)$，与其属于整数矛盾。
+
+故假设不成立，即 $e$ 为无理数。
+
 #### 定义：函数的解析性
 
 若 $f$ 在定义域内总是可以展开为 Maclaurin 级数，则称 $f$ 是解析的，如 $e^x, \sin x, \cos x$ 等。
@@ -331,7 +477,7 @@ $$
 
 #### 法一：带 Lagrange 余项的 Taylor 公式 + 放缩余项
 
-[例 8] 求证：$\forall x \in \mathbb{R}, e^x \geq 1 + x$。
+[例 12] 求证：$\forall x \in \mathbb{R}, e^x \geq 1 + x$。
 
 由带 Lagrange 余项的 Maclaurin 公式可知：
 
@@ -342,7 +488,7 @@ $$
 \end{aligned}
 $$
 
-[例 9] 求证：$\forall x > -1, \alpha > 1, (1 + x)^{\alpha} \geq 1 + \alpha x$。
+[例 13] 求证：$\forall x > -1, \alpha > 1, (1 + x)^{\alpha} \geq 1 + \alpha x$。
 
 由带 Lagrange 余项的 Maclaurin 公式可知：
 
@@ -355,7 +501,7 @@ $$
 
 #### 法二：构造函数并研究其单调性或最值
 
-[例 10] 求证：$\forall x \in (0, \dfrac{\pi}{2}], \dfrac{\sin x}{x} \geq \dfrac{2}{\pi}$。
+[例 14] 求证：$\forall x \in (0, \dfrac{\pi}{2}], \dfrac{\sin x}{x} \geq \dfrac{2}{\pi}$。
 
 - 这就是 $y = \sin x$ 连接 $(0, 0), (\dfrac{\pi}{2}, 1)$ 的“割线放缩”。
 
