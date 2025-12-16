@@ -385,6 +385,115 @@ $$
 - 整理并取绝对值，化简后可知 $|f'(x)| \leq \dfrac{|f(x + h) - f(x - h)|}{2h} + \dfrac{|f''(\xi) - f''(\xi')|}{4} h \leq \dfrac{M_0}{h} + \dfrac{M_2}{2} h$。
 - 接下来，取均值不等式即可卡出 $|f'(x)| \leq \sqrt{2 M_0 M_2}$。
 
+### 插值公式及其余项
+
+#### Lagrange 插值公式
+
+给出 $f$ 在 $n + 1$ 个点 $x_0 < x_1 < \cdots < x_n$ 处的取值 $y_0, y_1, \cdots, y_n$，我们尝试用一个**多项式**“拟合”出 $f$ 在这些位置的表现。
+
+从构造的视角看，一个暴躁的想法是：
+
+- 构造多项式 $\forall i \in [0, n] \cap \mathbb{N}, L_i(x)$，使得 $L_i(x_j) = [i = j]$。
+- 此时可以构造多项式 $L(x) = \displaystyle\sum_{i = 0}^n y_i L_i(x)$，则 $\forall i \in [0, n] \cap \mathbb{N}, L(x_i) = y_i$。
+
+下面来构造 $L_i(x)$：
+
+- 由于 $L_i(x)$ 有 $n$ 个零点 $x_0, \cdots, x_{i - 1}, x_{i + 1}, \cdots, x_n$，其应当有因式 $\displaystyle\prod_{j \neq i} (x - x_j)$。
+- 为了让 $L_i(x_i) = 1$，考虑将其除以 $\displaystyle\prod_{j \neq i} (x_i - x_j)$。
+- 故可令 $L_i(x) = \dfrac{\prod_{j \neq i} (x - x_j)}{\prod_{j \neq i} (x_i - x_j)}$。
+
+因此，我们得到一个满足要求的 $L$：
+
+$$
+L(x) = \sum_{i = 0}^n y_i \cdot \frac{\prod_{j \neq i} (x - x_j)}{\prod_{j \neq i} (x_i - x_j)}
+$$
+
+这是一个 $n$ 次多项式，反证即得这样的构造唯一。
+
+上面的 $L_i(x)$ 称作 **Lagrange 基函数**，$L(x)$ 称作 **Lagrange 插值多项式**。
+
+------
+
+当我们想要“插值”，要么知道它是一个多项式函数、且想要求出其系数或点值，要么想要用一个“性质较好”的函数（比如多项式函数）去近似原函数、以简化计算等。因此，我们可能需要知道 Lagrange 插值公式与原函数之间的误差。
+
+这看上去似乎不可能做到，因为上面的公式对 $f$ 没有任何要求。不过事实上，若加入一些限制，我们确实能够通过某些“余项”的信息估计误差。
+
+#### 定理（Lagrange 插值公式的余项）
+
+内容：若 $f$ 在 $[a, b]$ 上 $n + 1$ 阶可导，选取 $[a, b]$ 上的 $n + 1$ 个点 $a \leq x_0 < \cdots < x_n \leq b$ 得到 Lagrange 插值多项式 $L$，则：
+
+$$
+\forall x \in [a, b], \exists \xi \in (a, b), \text{s.t. } f(x) = L(x) + \frac{f^{(n + 1)}(\xi)}{(n + 1)!} \prod_{i = 0}^n (x - x_i)
+$$
+
+证明：
+
+- 由 $\forall i \in [0, n] \cap \mathbb{N}, f(x) = L(x)$ 可知 $f(x) - L(x)$ 有 $n + 1$ 个零点 $x_0, \cdots, x_n$。
+- 令 $\omega(x) = \displaystyle\prod_{i = 0}^n (x - x_i)$，则 $f(x) - L(x)$ 可以写成 $r(x) \omega(x)$ 的形式，考虑求出 $r(x)$。
+- (1) $\forall x \in \{x_0, \cdots, x_n\}$，由于 $\displaystyle\prod_{i = 0}^n (x - x_i) = 0$，任取 $\xi \in (a, b)$ 并令 $r(x) = \dfrac{f^{(n + 1)}(\xi)}{(n + 1)!}$ 即可。
+- (2) $\forall x \in [a, b] \backslash \{x_0, \cdots, x_n\}$，令 $D(t) = f(t) - L(t) - r(x) \omega(t)$，则 $D$ 存在 $n + 2$ 个零点为 $x, x_0, \cdots, x_n$。
+- 连续使用 $n + 1$ 次 Rolle 定理，可知 $D^{(n + 1)}(t)$ 存在一个 $(a, b)$ 上的零点，即：
+
+$$
+\exists \xi \in (a, b), \text{s.t. } 0 = D^{(n + 1)}(t) = f^{(n + 1)}(\xi) - 0 - r(x) (n + 1)! \Rightarrow r(x) = \frac{f^{(n + 1)}(\xi)}{(n + 1)!}
+$$
+
+- 综合 (1)(2) 即可得证。
+
+#### Hermite 插值公式
+
+上面的 Lagrange 插值公式给出的 $L$ 仅仅拟合了 $f$ 的函数值，但没能模仿 $f$ 在高阶导数处的行为。下面我们尝试进行更“光滑”的拟合。
+
+给出 $[a, b]$ 上的 $n$ 个点 $a \leq x_1 < \cdots < x_n \leq b$ 和约束 $k_1, \cdots, k_n \in \mathbb{N}$，我们尝试用一个多项式拟合出 $\forall i \in [1, n] \cap \mathbb{N}, j \in [0, k_i] \cap \mathbb{N}, f^{(j)}(x_i)$ 的值。当然，这里要求 $f$ 在 $[a, b]$ 上 $\displaystyle\max_{i = 1}^n k_i$ 阶可导。
+
+仿照上面的思路，考虑构造多项式 $\forall i \in [1, n] \cap \mathbb{N}, j \in [0, k_i] \cap \mathbb{N}, H_{i, j}(x)$，使得 $\forall p \in ([1, n] \backslash \{i\}) \cap \mathbb{N}, q \in [0, k_p] \cap \mathbb{N}, H_{i, j}^{(q)}(x_p) = [i = p \land j = q]$：
+
+- _Motivation：对于 $i$，我们希望刚好求 $j$ 次导并产生常数。_
+- 考虑让 $U_{i, j}(x) = (x - x_i)^j$ 为其因式。
+- _Motivation：对于 $p$，我们可能会求 $k_p$ 次导啊！如何制止其产生值？_
+- 考虑让 $V_i(x) = \displaystyle\prod_{p \neq i} (x - x_p)^{k_p + 1}$ 为其因式。
+- 接下来我们只需选取多项式函数 $R_{i, j}(x)$，并令 $H_{i, j}(x) = U_{i, j}(x) V_i(x) R_{i, j}(x)$，使得 $\forall q \in [0, j) \cap \mathbb{N}, H_{i, j}^{(q)}(x_i) = 0$ 且 $H_{i, j}^{(j)}(x_i) = 1$。
+- 令 $W_i(x) = \dfrac{1}{V_i(x)}$，则 $H_{i, j}(x) W_i(x) = U_{i, j}(x) r(x)$。
+- 对两边同时求 $j + q$ 次导，得到：
+
+$$
+\sum_{r = 0}^{j + q} C_{j + q}^r H_{i, j}^{(r)}(x) W_i^{(j + q - r)}(x) = \sum_{r = 0}^{j + q} C_{j + q}^r U_{i, j}^{(r)}(x) R_{i, j}^{(j + q - r)}(x)
+$$
+
+- 令 $x = x_i$，得到 $C_{j + q}^j W_i^{(q)}(x_i) = C_{j + q}^j \cdot j! \cdot R_{i, j}^{(q)}(x_i)$，即 $R_{i, j}^{(q)}(x_i) = \dfrac{1}{j!} W_i^{(q)}(x_i)$。
+- 类比 Taylor 展开式，令 $R_{i, j} = \dfrac{1}{j!} \displaystyle\sum_{q = 0}^{?} \frac{W_i^{(q)}(x_i)}{q!} (x - x_i)^q$。
+- 令 $m = \displaystyle\sum_{i = 1}^n (k_i + 1)$，仿照 Lagrange 行列式使 $H$ 为一个 $m - 1$ 次多项式，故求和上限设为 $n_i - j$。
+
+因此，我们得到一个满足要求的 $H$：
+
+$$
+H(x) = \sum_{i = 0}^n \sum_{j = 0}^{k_i} f^{(j)}(x_i) \cdot \frac{1}{j!} (x - x_i)^j \cdot V_i(x) \sum_{q = 0}^{n_i - j} \frac{W_i^{(q)}(x_i)}{q!} (x - x_i)^q 
+$$
+
+这是一个 $m - 1$ 次多项式，反证即得这样的构造唯一。
+
+上面的 $H_i(x)$ 称作 **Hermite 基函数**，$H(x)$ 称作 **Hermite 插值多项式**。
+
+#### 定理（Hermite 插值公式的余项）
+
+内容：选取 $[a, b]$ 上的 $n$ 个点 $a \leq x_1 < \cdots < x_n \leq b$ 和约束 $k_1, \cdots, k_n \in \mathbb{N}$ 得到 Hermite 插值多项式 $H$，令 $m = \displaystyle\sum_{i = 1}^n (k_i + 1)$，若 $f$ 在 $[a, b]$ 上 $m$ 阶可导，则：
+
+$$
+\forall x \in [a, b], \exists \xi \in (a, b), \text{s.t. } f(x) = H(x) + \frac{f^{m}(\xi)}{m!} \prod_{i = 1}^n (x - x_i)^{k_i}
+$$
+
+证明：同理构造函数并通过 Rolle 定理处理零点即可，略。
+
+[例 10] 已知 $f$ 在 $[0, 1]$ 上四阶可导，$p$ 为三次多项式且满足 $p(0) = f(0), p'(0) = f'(0), p(1) = f(1), p'(1) = f'(1)$，求证：$\forall x \in [0, 1], |f(x) - p(x)| \leq \dfrac{1}{384} \displaystyle\max_{x \in [0, 1]} |f^{4}(x)|$。
+
+由题意可知 $p$ 为 $f$ 的以 $0, 1$ 为二重节点的 Hermite 插值多项式，则：
+
+$$
+\forall x \in [0, 1], \exists \xi \in (0, 1), \text{s.t. } f(x) - p(x) = \dfrac{f^{4}(\xi)}{24} \cdot x^2 (x - 1)^2
+$$
+
+故 $|f(x) - p(x)| = \dfrac{1}{24} (x(1 - x))^2 \displaystyle\max_{x \in [0, 1]} |f^{4}(x)| \leq \frac{1}{24} (\frac{1}{4})^2 \max_{x \in [0, 1]} |f^{4}(x)| = \frac{1}{384} \max_{x \in [0, 1]} |f^{4}(x)|$。
+
 ### Taylor 级数
 
 若 $f$ 在 $I$ 上任意阶可导，取 $x_0 \in I$，则有：
@@ -406,7 +515,7 @@ $$
 - **注意：只要 $f$ 在 $I$ 上任意阶可导，就可以给出其在 $a$ 处定义的 $I$ 上的 Taylor 级数，但此时不一定能说可以展开为 Taylor 级数，因为函数值和级数结果不一定能取等！**
 - $x_0 = 0$ 时的 Taylor 级数也称 Maclaurin 级数。
 
-[例 10] 求 $f(x) = e^x$ 的 Maclaurin 级数。
+[例 11] 求 $f(x) = e^x$ 的 Maclaurin 级数。
 
 写出 $f$ 的带 Lagrange 余项的 Maclaurin 展开式：
 
@@ -422,7 +531,7 @@ $$
 e^x = \sum_{i = 0}^{+\infty} \frac{x^i}{i!}
 $$
 
-[例 11] 求证：$e$ 为无理数。
+[例 12] 求证：$e$ 为无理数。
 
 考虑反证法，假设 $e$ 可以被表示为既约分数 $\dfrac{M}{N}$。
 
@@ -477,7 +586,7 @@ $$
 
 #### 法一：带 Lagrange 余项的 Taylor 公式 + 放缩余项
 
-[例 12] 求证：$\forall x \in \mathbb{R}, e^x \geq 1 + x$。
+[例 13] 求证：$\forall x \in \mathbb{R}, e^x \geq 1 + x$。
 
 由带 Lagrange 余项的 Maclaurin 公式可知：
 
@@ -488,7 +597,7 @@ $$
 \end{aligned}
 $$
 
-[例 13] 求证：$\forall x > -1, \alpha > 1, (1 + x)^{\alpha} \geq 1 + \alpha x$。
+[例 14] 求证：$\forall x > -1, \alpha > 1, (1 + x)^{\alpha} \geq 1 + \alpha x$。
 
 由带 Lagrange 余项的 Maclaurin 公式可知：
 
@@ -501,7 +610,7 @@ $$
 
 #### 法二：构造函数并研究其单调性或最值
 
-[例 14] 求证：$\forall x \in (0, \dfrac{\pi}{2}], \dfrac{\sin x}{x} \geq \dfrac{2}{\pi}$。
+[例 15] 求证：$\forall x \in (0, \dfrac{\pi}{2}], \dfrac{\sin x}{x} \geq \dfrac{2}{\pi}$。
 
 - 这就是 $y = \sin x$ 连接 $(0, 0), (\dfrac{\pi}{2}, 1)$ 的“割线放缩”。
 
