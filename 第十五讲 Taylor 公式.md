@@ -462,7 +462,7 @@ $$
 
 - 令 $x = x_i$，得到 $C_{j + q}^j W_i^{(q)}(x_i) = C_{j + q}^j \cdot j! \cdot R_{i, j}^{(q)}(x_i)$，即 $R_{i, j}^{(q)}(x_i) = \dfrac{1}{j!} W_i^{(q)}(x_i)$。
 - 类比 Taylor 展开式，令 $R_{i, j} = \dfrac{1}{j!} \displaystyle\sum_{q = 0}^{?} \frac{W_i^{(q)}(x_i)}{q!} (x - x_i)^q$。
-- 令 $m = \displaystyle\sum_{i = 1}^n (k_i + 1)$，仿照 Lagrange 行列式使 $H$ 为一个 $m - 1$ 次多项式，故求和上限设为 $n_i - j$。
+- 令 $m = \displaystyle\sum_{i = 1}^n (k_i + 1)$，仿照 Lagrange 插值公式使 $H$ 为一个 $m - 1$ 次多项式，故求和上限设为 $n_i - j$。
 
 因此，我们得到一个满足要求的 $H$：
 

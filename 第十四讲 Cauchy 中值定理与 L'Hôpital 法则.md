@@ -156,3 +156,27 @@
 - $f(x) = \dfrac{\pi}{2} - \arctan x, g(x) = \dfrac{1}{x}$，为 $\dfrac{0}{0}$ 型，且满足条件。
 - $f'(x) = -\dfrac{1}{x^2 + 1}, g'(x) = -\dfrac{1}{x^2}$。
 - 故 $\displaystyle\lim_{x \to +\infty} \dfrac{f(x)}{g(x)} = \lim_{x \to +\infty} \dfrac{f'(x)}{g'(x)} = \lim_{x \to +\infty} \dfrac{x^2}{x^2 + 1} = \lim_{x \to +\infty} \dfrac{1}{1 + \frac{1}{x^2}} = 1$。
+
+#### 导数极限定理
+
+条件：
+
+- (1) $f$ 在 $U(x_0)$ 上连续，在 $\check{U}(x_0)$ 上可导。
+- (2) $\displaystyle\lim_{x \to x_0} f'(x)$ 存在。
+
+结论：$f$ 在 $x_0$ 处可导，且 $f'(x_0) = \displaystyle\lim_{x \to x_0} f'(x)$。
+
+证明：
+
+- 由 $f$ 在 $U(x_0)$ 上连续可知：当 $x \to x_0, f(x) - f(x_0) \to 0$。
+- 故由洛必达法则可知：
+
+$$
+\begin{aligned}
+f'(x_0) &= \lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0} \\
+&= \lim_{x \to x_0} \frac{f'(x)}{1} \\
+&= \lim_{x \to x_0} f'(x)
+\end{aligned}
+$$
+
+该定理也可以通过 Lagrange 定理 + $\epsilon - \delta$ 语言证明，此处略去。
