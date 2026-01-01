@@ -1,6 +1,6 @@
-# 第十五讲 Taylor 公式
+# 第十五讲 Taylor 展开式
 
-### 带 Peano 余项的 Taylor 公式
+### 带 Peano 余项的 Taylor 展开式
 
 我们已经学过导数定义导出的无穷小增量公式 $f(x) = f(x_0) + f'(x_0) (x - x_0) + o(x - x_0) \ (x \to x_0)$，这在 $x - x_0$ 的“精度”下近似了 $f(x)$，或者说从一阶导数导出了 $f(x)$ 的一阶近似。
 
@@ -24,9 +24,11 @@ $$
 
 ------
 
-内容：若 $f$ 在 $x_0$ 处 $n$ 阶可导，则 $f(x) = f(x_0) + \displaystyle\sum_{i = 1}^n f^{(i)}(x_0) (x - x_0)^i + o((x - x_0)^n) \ (x \to x_0)$。
+内容：若 $f$ 在 $x_0$ 处 $n$ 阶可导，则 $f(x) = \displaystyle\sum_{i = 0}^n f^{(i)}(x_0) (x - x_0)^i + o((x - x_0)^n) \ (x \to x_0)$。
 
 证明：仿照求二阶近似的方式做数学归纳法即可，略。
+
+该表达式称为 $f$ 的带 Peano 余项的 Taylor 展开式 / 公式。
 
 #### 定理（带 Peano 余项的 Taylor 展开式唯一）
 
@@ -35,19 +37,19 @@ $$
 证明：
 
 - _Motivation：能不能一位一位确定啊？_
-- 令 $p_n(x) = f(x_0) + \displaystyle\sum_{i = 1}^n f^{(i)}(x_0) (x - x_0)^i, q_n(x) = \displaystyle\sum_{i = 0}^n a_i (x - x_0)^i$。
+- 令 $p_n(x) = \displaystyle\sum_{i = 0}^n f^{(i)}(x_0) (x - x_0)^i, q_n(x) = \displaystyle\sum_{i = 0}^n a_i (x - x_0)^i$。
 - 则 $f(x) = p_n(x) + o((x - x_0)^n) = q_n(x) + o((x - x_0)^n) \ (x \to x_0)$，于是 $p_n(x) - q_n(x) = o((x - x_0)^n) \ (x \to x_0)$。
 - 首先考察 $a_0$：由于 $\displaystyle\lim_{x \to x_0} (p_n(x) - q_n(x)) = \lim_{x \to x_0} ((f(x_0) - a_0) + o(1)) = f(x_0) - a_0 = 0$，可得 $a_0 = f(x_0)$。
 - 接下来考察 $a_1$：由于 $\displaystyle\lim_{x \to x_0} \frac{p_n(x) - q_n(x)}{x - x_0} = \lim_{x \to x_0} ((f'(x_0) - a_1) + o(1)) = f'(x_0) - a_1 = 0$，可得 $a_1 = f'(x_0)$。
 - 如此续行（或者说使用数学归纳法），最终可得 $\forall i \in [1, n] \cap \mathbb{N}, a_i = f^{(i)}(x_0)$。
 
-#### 麦克劳林 Maclaurin 公式
+#### 麦克劳林 Maclaurin 展开式
 
-内容：若 $f$ 在 $0$ 处 $n$ 阶可导，则 $f(x) = f(0) + \displaystyle\sum_{i = 1}^n f^{(i)}(x) x^i + o(x^n) \ (x \to 0)$。
+内容：若 $f$ 在 $0$ 处 $n$ 阶可导，则 $f(x) = \displaystyle\sum_{i = 0}^n f^{(i)}(0) x^i + o(x^n) \ (x \to 0)$。
 
-证明：在泰勒公式中代入 $x_0 = 0$ 立即可得。
+证明：在 Taylor 展开式中代入 $x_0 = 0$ 立即可得。
 
-[例 1] 求 $f(x) = \sin x$ 的 $2n + 2$ 阶麦克劳林展开式。
+[例 1] 求 $f(x) = \sin x$ 的 $2n + 2$ 阶 Maclaurin 展开式。
 
 $f$ 在 $0$ 处无穷次可导，且有：
 
@@ -70,7 +72,7 @@ $$
 
 ------
 
-同理，我们可以写出下列 $x \to 0$ 时的常用麦克劳林展开式：
+同理，我们可以写出下列 $x \to 0$ 时的常用 Maclaurin 展开式：
 
 $$
 \begin{aligned}
@@ -83,43 +85,40 @@ $$
 
 灵活运用这些公式有助于简化计算。
 
-[例 2] 求 $f(x) = \arctan x$ 的 $2n + 2$ 阶麦克劳林展开式。
+[例 2] 求 $f(x) = \arctan x$ 的 $2n + 1$ 阶 Maclaurin 展开式。
 
 易知 $f'(x) = \dfrac{1}{1 + x^2}$，但若直接继续向下求导就显得有些不便。
 
-但幸运的是，我们知道 $\dfrac{1}{1 - x}$ 的麦克劳林展开式。由于当 $x \to 0$，有 $-x^2 \to 0$，可得：
+但幸运的是，我们知道 $\dfrac{1}{1 - x}$ 的 Maclaurin 展开式。由于当 $x \to 0$，有 $-x^2 \to 0$，可得：
 
 $$
 \begin{aligned}
 f'(x) &= \frac{1}{1 - (-x^2)} \\
-&= \sum_{i = 0}^{n + 1} (-x^2)^i + o((-x^2)^{n + 1}) \\
-&= \sum_{i = 0}^{n + 1} (-1)^i x^{2i} + o(x^{2n + 2})
+&= \sum_{i = 0}^n (-x^2)^i + o((-x^2)^n) \\
+&= \sum_{i = 0}^n (-1)^i x^{2i} + o(x^{2n})
 \end{aligned}
 $$
 
-现在，我们尝试通过 $f'$ 的麦克劳林展开式，求出 $f$ 的麦克劳林展开式。
+现在，我们尝试通过 $f'$ 的 Maclaurin 展开式，求出 $f$ 的 Maclaurin 展开式。
 
-由于 $f'(x) = \displaystyle\sum_{i = 0}^{2n + 2} \frac{(f')^{(i)}(0)}{i!} x^i + o(x^{2n + 2}) = \sum_{i = 1}^{2n + 3} \frac{f^{(i)}(0)}{(i - 1)!} x^{i - 1} + o(x^{2n + 2}) \ (x \to x_0)$，有：
+由于 $f'(x) = \displaystyle\sum_{i = 0}^{2n} \frac{(f')^{(i)}(0)}{i!} x^i + o(x^{2n}) = \sum_{i = 1}^{2n + 1} \frac{f^{(i)}(0)}{(i - 1)!} x^{i - 1} + o(x^{2n}) \ (x \to 0)$，有：
 
 $$
-\forall i \in [1, 2n + 3] \cap \mathbb{N}, \frac{f^{(i)}(0)}{(i - 1)!} = \begin{cases} (-1)^{\frac{i - 1}{2}}, &\quad 2 \not\mid i \\ 0, &\quad 2 \mid i\end{cases} \Rightarrow \frac{f^{(i)}(0)}{i!} = \begin{cases} \dfrac{(-1)^{\frac{i - 1}{2}}}{i}, &\quad 2 \not\mid i \\ 0, &\quad 2 \mid i\end{cases}
+\forall i \in [1, 2n + 1] \cap \mathbb{N}, \frac{f^{(i)}(0)}{(i - 1)!} = \begin{cases} (-1)^{\frac{i - 1}{2}}, &\quad 2 \not\mid i \\ 0, &\quad 2 \mid i\end{cases} \Rightarrow \frac{f^{(i)}(0)}{i!} = \begin{cases} \dfrac{(-1)^{\frac{i - 1}{2}}}{i}, &\quad 2 \not\mid i \\ 0, &\quad 2 \mid i\end{cases}
 $$
 
 故所求展开式为：
 
 $$
 \begin{aligned}
-f(x) &= f(0) + \sum_{i = 1}^{2n + 3} \frac{f^{(i)}(0)}{i!} x^i + o(x^{2n + 3}) \\
-&= \sum_{i = 0}^{n + 1} \frac{(-1)^i}{2i + 1} x^{2i + 1} + o(x^{2n + 3}) \\
-&= \sum_{i = 0}^n \frac{(-1)^i}{2i + 1} x^{2i + 1} + o(x^{2n + 2})
+f(x) &= f(0) + \sum_{i = 1}^{2n + 1} \frac{f^{(i)}(0)}{i!} x^i + o(x^{2n + 1}) \\
+&= \sum_{i = 0}^n \frac{(-1)^i}{2i + 1} x^{2i + 1} + o(x^{2n + 1})
 \end{aligned}
 $$
 
-[例 3] 对于 $\alpha \in \mathbb{R}$，求 $f(x) = (1 + x)^{\alpha}$ 的 $n$ 阶麦克劳林展开式。
+[例 3] 对于 $\alpha \in \mathbb{R}$，求 $f(x) = (1 + x)^{\alpha}$ 的 $n$ 阶 Maclaurin 展开式。
 
-记广义组合数为 $C_{\alpha}^k = \dfrac{1}{k!} \displaystyle\prod_{i = 0}^{k - 1} (\alpha - i)$，则 $f^{(k)}(x) = C_{\alpha}^k (1 + x)^{\alpha - k}$。
-
-故所求展开式为：
+记广义组合数为 $C_{\alpha}^k = \dfrac{1}{k!} \displaystyle\prod_{i = 0}^{k - 1} (\alpha - i)$，则 $\dfrac{f^{(k)}(x)}{k!} = C_{\alpha}^k (1 + x)^{\alpha - k}$，故所求展开式为：
 
 $$
 f(x) = \sum_{i = 0}^n C_{\alpha}^i x^i + o(x^n)
@@ -129,7 +128,7 @@ $$
 
 ------
 
-结合例 2 和例 3，可以求得 $\arcsin$ 的 $2n + 1$ 阶麦克劳林展开式为：
+结合例 2 和例 3，可以求得 $\arcsin$ 的 $2n + 1$ 阶 Maclaurin 展开式为：
 
 $$
 \begin{aligned}
@@ -141,7 +140,7 @@ $$
 
 [例 3] 将 $f(x) = e^{\cos x}$ 在 $x = 0$ 处展开至 $x^4$ 项。
 
-- **注意当 $x \to 0$ 有 $\cos x \to 1$，不应直接代入 $\cos x$ 的麦克劳林展开式！**
+- **注意当 $x \to 0$ 有 $\cos x \to 1$，不应直接代入 $\cos x$ 的 Maclaurin 展开式！**
 
 令 $y = \cos x = 1 - \dfrac{1}{2} x^2 + \dfrac{1}{24} x^4 + o(x^4)$，考虑将 $e^y$ 在 $y = 1$ 处展开：
 
@@ -158,9 +157,11 @@ $$
 
 - _Motivation：$\sin x, \cos x$ 的展开式都已知，能否据此求出 $\tan x = \dfrac{\sin x}{\cos x}$ 的展开式？_
 
+当 $x \to 0$，有：
+
 $$
 \begin{aligned}
-x \to 0, f(x) &= \frac{\sin x}{\cos x} \\
+f(x) &= \frac{\sin x}{\cos x} \\
 &= \frac{x - \frac{x^3}{3!} + o(x^4)}{1 - \frac{x^2}{2!} + \frac{x^4}{4!} + o(x^4)} \\
 &= (x - \frac{x^3}{3!} + o(x^4)) (1 + (\frac{x^2}{2!} - \frac{x^4}{4!} + o(x^4)) + (\frac{x^2}{2!} - \frac{x^4}{4!} + o(x^4))^2 + o((\frac{x^2}{2!} - \frac{x^4}{4!} + o(x^4))^2)) \\
 &= (x - \frac{x^3}{3!} + o(x^4)) (1 + \frac{x^2}{2!} + \frac{5x^4}{24} + o(x^4)) \\
@@ -225,7 +226,7 @@ $$
 
 当 $x < x_0$，同理而略之。
 
-上面的推导用到了 $n$ 阶 Taylor 公式和 Cauchy 中值定理，下面据此重述公式的条件与内容。
+上面的推导用到了 $n$ 阶 Taylor 公式和 Cauchy 定理，下面据此重述公式的条件与内容。
 
 ------
 
@@ -356,11 +357,11 @@ $$
 &\leq \frac{1}{2 (b - a)} (|f''(\xi_1)| (a - x)^2 + |f''(\xi_2)| (b - x)^2) \\
 &\leq \frac{1}{2 (b - a)} \cdot ((a - x)^2 + (b - x)^2) \max_{a \leq x \leq b} |f''(x)| \\
 &< \frac{1}{2 (b - a)} \cdot (b - a)^2 \max_{a \leq x \leq b} |f''(x)| \\
-&= \frac{b - a}{2} \max_{a \leq x \leq b} |f''(x)|
+&= \frac{1}{2} (b - a) \max_{a \leq x \leq b} |f''(x)|
 \end{aligned}
 $$
 
-- 由 $x$ 的任意性，再特判 $x = a$ 和 $x = b$ 的情况（或利用 $f$ 的连续性），可知 $\displaystyle\max{a \leq x \leq b} |f'(x)| \leq \frac{b - a}{2} \max_{a \leq x \leq b} |f''(x)|$。
+- 由 $x$ 的任意性，再特判 $x = a$ 和 $x = b$ 的情况（或利用 $f$ 的连续性），可知 $\displaystyle\max_{a \leq x \leq b} |f'(x)| \leq \frac{1}{2} (b - a) \max_{a \leq x \leq b} |f''(x)|$。
 
 [例 9] 已知 $f$ 在 $\mathbb{R}$ 上二阶可导，且 $\forall x \in \mathbb{R}, |f(x)| \leq M_0, |f''(x)| \leq M_2$，求证：$\forall x \in \mathbb{R}, |f'(x)| \leq \sqrt{2 M_0 M_2}$。
 
@@ -484,15 +485,15 @@ $$
 
 证明：同理构造函数并通过 Rolle 定理处理零点即可，略。
 
-[例 10] 已知 $f$ 在 $[0, 1]$ 上四阶可导，$p$ 为三次多项式且满足 $p(0) = f(0), p'(0) = f'(0), p(1) = f(1), p'(1) = f'(1)$，求证：$\forall x \in [0, 1], |f(x) - p(x)| \leq \dfrac{1}{384} \displaystyle\max_{x \in [0, 1]} |f^{4}(x)|$。
+[例 10] 已知 $f$ 在 $[0, 1]$ 上四阶可导，$p$ 为三次多项式且满足 $p(0) = f(0), p'(0) = f'(0), p(1) = f(1), p'(1) = f'(1)$，求证：$\forall x \in [0, 1], |f(x) - p(x)| \leq \dfrac{1}{384} \displaystyle\max_{x \in [0, 1]} |f^{(4)}(x)|$。
 
 由题意可知 $p$ 为 $f$ 的以 $0, 1$ 为二重节点的 Hermite 插值多项式，则：
 
 $$
-\forall x \in [0, 1], \exists \xi \in (0, 1), \text{s.t. } f(x) - p(x) = \dfrac{f^{4}(\xi)}{24} \cdot x^2 (x - 1)^2
+\forall x \in [0, 1], \exists \xi \in (0, 1), \text{s.t. } f(x) - p(x) = \dfrac{f^{(4)}(\xi)}{24} \cdot x^2 (x - 1)^2
 $$
 
-故 $|f(x) - p(x)| = \dfrac{1}{24} (x(1 - x))^2 \displaystyle\max_{x \in [0, 1]} |f^{4}(x)| \leq \frac{1}{24} (\frac{1}{4})^2 \max_{x \in [0, 1]} |f^{4}(x)| = \frac{1}{384} \max_{x \in [0, 1]} |f^{4}(x)|$。
+故 $|f(x) - p(x)| = \dfrac{1}{24} (x(1 - x))^2 \displaystyle\max_{x \in [0, 1]} |f^{(4)}(x)| \leq \frac{1}{24} (\frac{1}{4})^2 \max_{x \in [0, 1]} |f^{(4)}(x)| = \frac{1}{384} \max_{x \in [0, 1]} |f^{(4)}(x)|$。
 
 ### Taylor 级数
 

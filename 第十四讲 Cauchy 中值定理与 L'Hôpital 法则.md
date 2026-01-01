@@ -1,14 +1,12 @@
 # 第十四讲 Cauchy 中值定理与 L'Hôpital 法则
 
-### 洛必达 L'Hôpital 法则
-
-我们有时需要确定形如 $\dfrac{0}{0}, \dfrac{\infty}{\infty}$ 的不定式。
-
-#### 柯西 Cauchy 中值定理
+### 柯西 Cauchy 中值定理
 
 - 由有限增量公式可知 $\exists \xi_1 \in (a, b), \text{s.t. } f(a) - f(b) = f'(\xi_1) (a - b), \exists \xi_2 \in (a, b), \text{s.t. } g(a) - g(b) = g'(\xi_2) (a - b)$。
 - 于是 $\dfrac{f(a) - f(b)}{g(a) - g(b)} = \dfrac{f'(\xi_1)}{g'(\xi_2)}$。
-- 那么，能不能构造 $\xi \in (a, b)$，使得 $\dfrac{f(a) - f(b)}{g(a) - g(b)} = \dfrac{f'(\xi)}{g'(\xi)}$ 呢？
+- 那么，能不能取得 $\xi \in (a, b)$，使得 $\dfrac{f(a) - f(b)}{g(a) - g(b)} = \dfrac{f'(\xi)}{g'(\xi)}$ 呢？
+
+------
 
 条件：
 
@@ -27,6 +25,45 @@
 - 不难发现令 $\forall x \in [a, b], F(x) = (g(b) - g(a)) f(x) - (f(b) - f(a)) g(x)$ 即可。
 - 注意到 $F(a) = F(b) = g(b) f(a) - f(b) g(a)$，故由罗尔定理可知 $\exists \xi \in (a, b), \text{s.t. } F'(\xi) = 0 \Rightarrow \dfrac{f(a) - f(b)}{g(a) - g(b)} = \dfrac{f'(\xi)}{g'(\xi)}$。
 
+[例 1] 已知 $f$ 在 $(0, 1]$ 上连续，在 $(0, 1)$ 上可导，且 $\displaystyle\lim_{x \to 0^+} \sqrt{x} f'(x) = c$，求证：$f$ 在 $(0, 1]$ 上一致连续。
+
+- _Motivation：感性理解，$x \to 0^+$ 时 $f'(x) \sim \dfrac{c}{\sqrt{x}}$，则令 $f(0) = 0$ 得到此时 $f(x) \sim 2c \sqrt{x}$，进而可以证明一致连续性。_
+- _Motivation：但这样做显然不行。那么，如何构造 $\sqrt{x} f'(x)$ 的形式？_
+
+由 Cauchy 中值定理可知：
+
+$$
+\forall 0 < x_1 < x_2 \leq 1, \exists \xi \in (x_1, x_2), \text{s.t. } \frac{f(x_2) - f(x_1)}{\sqrt{x_2} - \sqrt{x_1}} = \frac{f'(\xi)}{\frac{1}{2 \sqrt{\xi}}} = 2 \sqrt{\xi} f'(\xi)
+$$
+
+由 $\displaystyle\lim_{x \to 0^+} \sqrt{x} f'(x) = c$ 可知 $\sqrt{x} f'(x)$ 在 $U^+(0)$ 上**局部有界**，即：
+
+$$
+\exists \delta_0 \in (0, 1), M > 0, \text{s.t. } \forall x \in U^+(0, \delta), |\sqrt{x} f'(x)| \leq M
+$$
+
+代入可知：
+
+$$
+\forall 0 < x_1 < x_2 \leq \delta_0, |\frac{f(x_2) - f(x_1)}{\sqrt{x_2} - \sqrt{x_1}}| \leq 2M \Rightarrow |f(x_2) - f(x_1)| \leq 2M (\sqrt{x_2} - \sqrt{x_1}) < 2M \sqrt{x_2 - x_1}
+$$
+
+则有：
+
+$$
+\forall \epsilon > 0, \text{let } \delta = (\frac{\epsilon}{2M})^2, \forall x_1, x_2 \in (0, \delta_0] \land |x_1 - x_2| < \delta, |f(x_1) - f(x_2)| < \epsilon
+$$
+
+因此 $f$ 在 $(0, \delta_0]$ 上一致连续。
+
+由 $f$ 在闭区间 $[\delta_0, 1]$ 上连续可知其在 $[\delta_0, 1]$ 上也一致连续，进而易证 $f$ 在 $(0, 1]$ 上一致连续。
+
+- 有趣的是，若令 $f(x) = \sqrt{x}$，则其导函数无界但一致连续。
+
+### 洛必达 L'Hôpital 法则
+
+我们有时需要确定形如 $\dfrac{0}{0}, \dfrac{\infty}{\infty}$ 的不定式，下面分类讨论几种情况。
+
 #### 定理 1：$\check{U}(\infty)$ 上的 $\dfrac{\infty}{\infty} = \infty$ 型极限
 
 条件：
@@ -42,7 +79,7 @@
 
 - 下面只证 $x \to +\infty$ 的情况，$x \to -\infty$ 是同理的。
 - 由条件 (4) 可知：$\forall M_1 > 0, \exists \Delta_1 \in \check{U}(+\infty), \text{s.t. } \forall x > \Delta_1, |\dfrac{f'(x)}{g'(x)}| > M_1$。
-- $\forall \Delta_1 \leq a < b$，由柯西中值定理可知 $\exists \xi \in (a, b), \text{s.t. } \dfrac{f(a) - f(b)}{g(a) - g(b)} = \dfrac{f'(\xi)}{g'(\xi)}$。
+- $\forall \Delta_1 \leq a < b$，由 Cauchy 中值定理可知 $\exists \xi \in (a, b), \text{s.t. } \dfrac{f(a) - f(b)}{g(a) - g(b)} = \dfrac{f'(\xi)}{g'(\xi)}$。
 - _Motivation：我们能通过 $\xi$ 表出目标形式 $\dfrac{f(b)}{g(b)}$ 吗？_
 - 由上式可知 $\dfrac{f(b)}{g(b)} = \dfrac{f'(\xi)}{g'(\xi)} (1 - \dfrac{g(a)}{g(b)}) + \dfrac{f(a)}{g(b)}$。
 - _Motivation：$\dfrac{f'(\xi)}{g'(\xi)}$ 的绝对值随 $\xi$ 增大呈现出增大的趋势，$\dfrac{g(a)}{g(b)}, \dfrac{f(a)}{g(b)}$ 的绝对值随 $b$ 增大呈现出减小的趋势。这样看来，是否可以考虑让加和中前一项占主导？_
@@ -94,7 +131,7 @@
 
 - 下面还是只证 $x \to +\infty$ 的情况，$x \to -\infty$ 依然是同理的。
 - $\forall \epsilon > 0, \exists \Delta_1 \in \check{U}(+\infty), \text{s.t. } \forall x > \Delta_1, |\dfrac{f'(x)}{g'(x)} - A| < \epsilon$。
-- $\forall \Delta_1 \leq a < b$，由柯西中值定理可知 $\exists \xi \in (a, b), \text{s.t. } \dfrac{f(a) - f(b)}{g(a) - g(b)} = \dfrac{f'(\xi)}{g'(\xi)}$。
+- $\forall \Delta_1 \leq a < b$，由 Cauchy 中值定理可知 $\exists \xi \in (a, b), \text{s.t. } \dfrac{f(a) - f(b)}{g(a) - g(b)} = \dfrac{f'(\xi)}{g'(\xi)}$。
 - ~~由上式可知 $\dfrac{f(b)}{g(b)} = \dfrac{f'(\xi)}{g'(\xi)} (1 - \dfrac{g(a)}{g(b)}) + \dfrac{f(a)}{g(b)}$。~~
 - _Motivation：此时 $\dfrac{f'(\xi)}{g'(\xi)}$ 已经离 $A$ “很近”了，我们期待 $\dfrac{g(a)}{g(b)}, \dfrac{f(a)}{g(b)}$ “很小”。_
 - _Motivation：但这里与定理 1 恰好反过来了，$b$ 越大，它带来的影响就越难以估量，感觉需要反过来？
@@ -137,25 +174,52 @@
 
 - **注意：每一步都要看是否满足洛必达法则的条件！**
 
-[例 1] 求 $\displaystyle\lim_{x \to 0} \dfrac{x - \sin x}{x^3}$。
+[例 2] 求 $\displaystyle\lim_{x \to 0} \dfrac{x - \sin x}{x^3}$。
 
 - $f(x) = x - \sin x, g(x) = x^3$，为 $\dfrac{0}{0}$ 型，且满足条件。
 - $f'(x) = 1 - \cos x, g'(x) = 3x^2$，为 $\dfrac{0}{0}$ 型，且满足条件。
 - $f''(x) = \sin x, g''(x) = 6x$，由 $\displaystyle\lim_{x \to 0} \dfrac{\sin x}{x} = 1$ 立即可得 $\displaystyle\lim_{x \to 0} \dfrac{f''(x)}{g''(x)} = \dfrac{1}{6}$。
 - 故 $\displaystyle\lim_{x \to 0} \dfrac{f(x)}{g(x)} = \lim_{x \to 0} \dfrac{f'(x)}{g'(x)} = \lim_{x \to 0} \dfrac{f''(x)}{g''(x)} = \dfrac{1}{6}$。
 
-[例 2] 求 $\displaystyle\lim_{x \to 0} \dfrac{x - \sin x}{x^2 \sin x}$。
+[例 3] 求 $\displaystyle\lim_{x \to 0} \dfrac{x - \sin x}{x^2 \sin x}$。
 
 - **注意：不要看到极限就直接开始使用洛必达法则！这可能会让问题变复杂！**
 
 注意到 $\dfrac{x - \sin x}{x^2 \sin x} = \dfrac{x - \sin x}{x^3} \cdot \dfrac{x}{\sin x}$，则 $\displaystyle\lim_{x \to 0} \dfrac{x - \sin x}{x^2 \sin x} = (\lim_{x \to 0} \dfrac{x - \sin x}{x^3}) (\lim_{x \to 0} \dfrac{x}{\sin x}) = \dfrac{1}{6}$。
 
-[例 3] 求 $\displaystyle\lim_{x \to +\infty} x (\dfrac{\pi}{2} - \arctan x)$。
+[例 4] 求 $\displaystyle\lim_{x \to +\infty} x (\dfrac{\pi}{2} - \arctan x)$。
 
 - _Motivation：对于这个 $0 \cdot \infty$，如果把较复杂的 $\dfrac{\pi}{2} - \arctan x$ 放到分母上去变成 $\dfrac{1}{\frac{\pi}{2} - \arctan x}$，求导后会变得很复杂。_
 - $f(x) = \dfrac{\pi}{2} - \arctan x, g(x) = \dfrac{1}{x}$，为 $\dfrac{0}{0}$ 型，且满足条件。
 - $f'(x) = -\dfrac{1}{x^2 + 1}, g'(x) = -\dfrac{1}{x^2}$。
 - 故 $\displaystyle\lim_{x \to +\infty} \dfrac{f(x)}{g(x)} = \lim_{x \to +\infty} \dfrac{f'(x)}{g'(x)} = \lim_{x \to +\infty} \dfrac{x^2}{x^2 + 1} = \lim_{x \to +\infty} \dfrac{1}{1 + \frac{1}{x^2}} = 1$。
+
+[例 5] 已知 $f$ 在 $\mathbb{R}$ 上二阶可导，且 $f(x) + xf'(x) + f''(x) \equiv 0$，求证：$\displaystyle\lim_{x \to +\infty} f(x) = \lim_{x \to +\infty} f'(x) = 0$。
+
+注意到 $(xf(x) + f'(x))' = f(x) + xf'(x) + f''(x) \equiv 0$，则 $xf(x) + f'(x) \equiv A$。
+
+注意到 $(e^{\frac{1}{2} x^2} f(x))' = e^{\frac{1}{2} x^2} (xf(x) + f'(x)) = A e^{\frac{1}{2} x^2}$，考虑开洛：
+
+$$
+\begin{aligned}
+\lim_{x \to +\infty} f(x) &= \lim_{x \to +\infty} \frac{e^{\frac{1}{2} x^2} f(x)}{e^{\frac{1}{2} x^2}} \\
+&= \lim_{x \to +\infty} \frac{A e^{\frac{1}{2} x^2}}{x e^{\frac{1}{2} x^2}} \\
+&= \lim_{x \to +\infty} \frac{A}{x} \\
+&= 0
+\end{aligned}
+$$
+
+类比地，注意到 $(e^{\frac{1}{2} x^2} f'(x))' = e^{\frac{1}{2} x^2} (xf'(x) + f''(x)) = -f(x) e^{\frac{1}{2} x^2}$，同样考虑开洛：
+
+$$
+\begin{aligned}
+\lim_{x \to +\infty} f'(x) &= \lim_{x \to +\infty} \frac{e^{\frac{1}{2} x^2} f'(x)}{e^{\frac{1}{2} x^2}} \\
+&= \lim_{x \to +\infty} \frac{-f(x) e^{\frac{1}{2} x^2}}{x e^{\frac{1}{2} x^2}} \\
+&= -\lim_{x \to +\infty} \frac{f(x)}{x} \\
+&= -(\lim_{x \to +\infty} f(x)) \cdot (\lim_{x \to +\infty} \frac{1}{x}) \\
+&= 0
+\end{aligned}
+$$
 
 #### 导数极限定理
 
